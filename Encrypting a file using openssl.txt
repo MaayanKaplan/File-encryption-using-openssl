@@ -1,0 +1,28 @@
+Encrypt and decrypt a file using openssl
+
+1. Creating a private key:
+openssl genrsa -out private-key.pem 2048
+
+2. I can see the public key using:
+cat private_key.pem
+
+3. Creating a public key from the private key:
+openssl rsa -in private_key.pem -pubout -out public_key.crt
+
+4. To see the public key:
+cat public_key.crt
+
+5. I"ll create a new file:
+echo "This is a text file that soon will be encrypted." > newfile.txt
+
+6. I'll encrypt the file using the public key:
+openssl rsautl -encrypt -pubin -inkey public_key.crt -in newfile.txt -out newfile.txt
+
+7. We can see that the file newfile.txt is encrypted:
+cat newfile.txt
+
+8. To decrypt the file we have to use the private key:
+openssl rsautl -decrypt -inkey private_key.pem -in newfile.txt -out newfile.txt
+
+9. The file now is decrypted:
+cat newfile.txt
